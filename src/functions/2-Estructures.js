@@ -192,7 +192,9 @@ function detectdifficulty(qubs){
     }
     return cont
 }
-
+function updateEveryCols(){ //Hace un bucle de 81 iteraciones para actualizar las cols respecto a los qubs
+    for(let b=0;b<81;b++) updateCol(b) 
+}
 // module.exports={
 export {
     //Para testing

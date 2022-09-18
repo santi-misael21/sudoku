@@ -38,9 +38,20 @@ setBoxs= new Set()
 //              agrego el random al Set setBoxs, para contar cuántas veces intenté con ese índice, //acá usaría un Set para cada entidad, uno para row, otro para box
             
 
+function map_filas_cajas(){
+        let filas= updateQubsBy("rows")
+        let cajas= updateQubsBy("boxs")
+        for(let a=0; a<81; a++){
+                if(filas[a]!==cajas[a]){
+                        return false
+                }
+        }
+        return true
+}
         
-        
-        
+export {
+        legalmaping
+}
             
 
 

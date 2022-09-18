@@ -264,38 +264,71 @@ function z(q){
 
 }
 
+
+
+
+
 function create3(){
+    var molino= 0
     var ochouno= 0
     let setRows= new Set()
     let setBoxs= new Set()
     let theSet= new Set() 
-    for (let aa= 0; aa < 5; aa++) {
+    for (let aa= 0; aa < 9; aa++) {
         for (let a= 0; a < 9; a++) {
+            molino++
             let random= Math.ceil( Math.random() * 9 ) 
             rows[aa][a]= random
             // if (a > 0){
-                if ( solution( rows[aa] ) !== -1 ) {       
+                if ( solution( rows[aa] ) !== -1 ) {
                     setRows.add(random)             
                     if(setRows.size >= 9) {
                         // rows[aa][a]= 0
                         // console.log("set a 9 en rows",theSet)
-                        console.log(setRows, aa, a, random, ochouno, 'rows == 9', rows[aa])     
+                        // console.log(setRows, aa, a, random, ochouno, 'rows == 9', rows[aa])     
                         setBoxs= new Set()
                         setRows= new Set()
                         rows[aa]= [0,0,0,  0,0,0,  0,0,0]
                         qubs= updateQubsBy("rows")
                         for(let b=0;b<9;b++){
                             updateBox((aa * 9) +b)
+                            updateCol((aa * 9) +b)
                         }
                         ochouno= aa* 9
                         a= -1
                         continue
                     }
-                    console.log(setRows, aa, a, random, ochouno, 'rows', rows[aa])     
+                    // console.log(setRows, aa, a, random, ochouno, 'rows', rows[aa])     
                     a= a-1
                     continue
                 }
-                console.log("pasé los continue")
+            // }
+            cols[a][aa]= random
+            if (aa > 0){
+                if ( solution( cols[a] ) !== -1 ) {
+                    setRows.add(random)             
+                    if(setRows.size >= 9) {
+                        // rows[aa][a]= 0
+                        // console.log("set a 9 en rows",theSet)
+                        // console.log(setRows, aa, a, random, ochouno, 'rows == 9', rows[aa])     
+                        setBoxs= new Set()
+                        setRows= new Set()
+                        rows[aa]= [0,0,0,  0,0,0,  0,0,0]
+                        qubs= updateQubsBy("rows")
+                        for(let b=0;b<9;b++){
+                            updateBox((aa * 9) +b)
+                            updateCol((aa * 9) +b)
+                        }
+                        ochouno= aa* 9
+                        a= -1
+                        continue
+                    }
+                    // console.log(setRows, aa, a, random, ochouno, 'rows', rows[aa])     
+                    a= a-1
+                    continue
+                }
+            }
+                // console.log("pasé los continue")
             // }
 
             var q= ochouno
@@ -306,11 +339,11 @@ function create3(){
             var foundbox= Math.floor(module / 3) + index * 3 //índice del box -> 0 al 8
             boxs[foundbox][indexbox]= random
             
-            if( indexbox > 0 ) {
+            // if( indexbox > 0 ) {
                 if ( solution( boxs[foundbox] ) !== -1 ) {
                     setRows.add(random)
                     boxs[foundbox][indexbox]= 0                     
-                    console.log(setRows, aa, a, random, ochouno)                    
+                    // console.log(setRows, aa, a, random, ochouno)                    
                     if(setRows.size >= 9) {
                         setBoxs= new Set()
                         setRows= new Set()
@@ -318,6 +351,7 @@ function create3(){
                         qubs= updateQubsBy("rows")
                         for(let b=0;b<9;b++){
                             updateBox((aa * 9) +b)
+                            updateCol((aa * 9) +b)
                         }
                         ochouno= aa* 9
                         a= -1
@@ -328,7 +362,7 @@ function create3(){
                     // ochouno--
                     continue
                 }
-            }
+            // }
             if(/*solution(cols[a ])=== -1 &&*/ solution(rows[aa])=== -1){
                 rows[aa][a]= random
                 // cols[a][aa]= random
@@ -339,7 +373,7 @@ function create3(){
         }
         theSet= new Set()
     }
-    return "ok"
+    return {ok:"ok", molino}
 }
 
 function create4(){
