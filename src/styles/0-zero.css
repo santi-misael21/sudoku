@@ -1,8 +1,21 @@
-.unity {
+.unity, .border, .under {
     color: #ff0000;
-    padding: 6px 6px;
+    padding-left: 14px;
     border: 1px solid wheat;
-    width: 1rem;
-    height: 1rem;
-    margin: auto;
+    width: 22px;
+    height: 36px;
+    font-size: large;
+}
+
+.under {
+    border-bottom: 2px double red;
+    
+}
+
+.border {
+    border-right: 2px double red;
+}
+
+#rep {
+    font-size: smaller;
 }
