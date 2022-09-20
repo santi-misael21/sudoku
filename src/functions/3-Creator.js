@@ -1,7 +1,11 @@
 import { solution } from "./0-Unrepeatable"
 import { boxs, cols, poss, qubs, resetSquare, rows, update, updateBox, updateCol, updateRow } from "./2-Estructures";
 poss()
-
+// qubs
+// let qubs= []
+// for(let a=0; a<81; a++){
+//     qubs.push(0)
+// }
 var rs= [   [],[],[],  [],[],[],   [],[],[]    ]
 var cs= [   [],[],[],  [],[],[],   [],[],[]    ]
 var bs= [   [],[],[],  [],[],[],   [],[],[]    ]
@@ -21,6 +25,19 @@ function difficult(level) {
         return true //se busca un numero
     }
     return false //no se busca un carajo
+}
+
+function sudoku(level, qube){
+    var suerte
+    var array= []
+    for (let index = 0; index < 81; index++) {
+        suerte= difficult(level) 
+        if (!suerte) {
+            qube[index]= 0
+            array.push(index)            
+        }
+    }
+    return array.length
 }
 
 function create(){
@@ -238,9 +255,6 @@ function create2(){
     return "ok"
     
 }
-// module.exports = {
-//     create
-// }
 
 function verificate81(){
 
@@ -263,8 +277,6 @@ function z(q){
     return [foundbox, indexbox]
 
 }
-
-
 
 
 
@@ -456,10 +468,10 @@ function create4(){
 
 }
 
-export {
-    create,
-    create2,
-    create3,
-    create4,
-    actualizarCubos
-}
+// export {
+//     create,
+//     create2,
+//     create3,
+//     create4,
+//     actualizarCubos
+// }

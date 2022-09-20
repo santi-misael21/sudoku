@@ -67,6 +67,7 @@ export default function Four({unity, rows, loyalindex}){
     }
 
     if(unity!==0){
+        console.log('loyalindex: ', loyalindex)
         document.getElementsByTagName("input")[loyalindex].value= unity
     }
     if(unity===0){
