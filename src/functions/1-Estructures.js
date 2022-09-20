@@ -89,12 +89,12 @@ function possBoxs() { //
 // possBoxs()
 
 // console.log(cols, boxs, rows, boxs)
-module.exports = {
-    // createRows,
-    // createCols,
-    // createBoxs,
-    // createQubs,
-    possCols,
-    possRows,
-    possBoxs,
-}
+// module.exports = {
+//     // createRows,
+//     // createCols,
+//     // createBoxs,
+//     // createQubs,
+//     possCols,
+//     possRows,
+//     possBoxs,
+// }

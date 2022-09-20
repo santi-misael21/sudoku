@@ -1,5 +1,7 @@
 import { solution } from "./0-Unrepeatable.js";
-// const {solution} = require('../functions/0-Unrepeatable.js');
+// const {solution} = require('../functions/0-Unrepeatable.js');// import { solution } from "./0-Unrepeatable"
+// import { boxs, cols, poss, qubs, resetSquare, rows, update, updateBox, updateCol, updateRow } from "./2-Estructures";
+// poss()
 
 let cols, boxs ,rows
 
@@ -150,13 +152,19 @@ function possBoxs(){
     }
     return boxs
 }
-
+// update()
 function poss(){
     for (let a= 0; a < 81; a++) {
         update(a)
     }
 }
 
+function possRandC(boxs){
+    possCols()
+    possRows()
+    boxs= possCols()
+    console.log(boxs)
+}
 
 function restore(){
     for (let a= 0; a < 81; a++) {
@@ -194,6 +202,32 @@ function detectdifficulty(qubs){
 }
 function updateEveryCols(){ //Hace un bucle de 81 iteraciones para actualizar las cols respecto a los qubs
     for(let b=0;b<81;b++) updateCol(b) 
+}
+
+
+function updateQubsBy(what){
+    var q= 0
+    var qubes= []
+    for(let aa= 0; aa < 9; aa++){
+        for(let a= 0; a < 9; a++){
+            if(what==="rows") {
+                qubes.push(rows[aa][a])
+            }
+            if(what==="cols") {
+                qubes.push(cols[a][aa])
+            }
+            if(what==="boxs") {
+                var gross= Math.floor(q / 9) //indica el numero de fila
+                var index= Math.floor(gross / 3) //este da 0, 1 ó 2
+                var module= (q % 9)
+                let indexbox = (Math.floor(q/9)*3 + q%3) %9 //índice puntual -> 0 al 8
+                var foundbox= Math.floor(module / 3) + index * 3 //índice del box -> 0 al 8
+                qubes.push(boxs[foundbox][indexbox])
+                q++
+            }            
+        }
+    }
+    return qubes
 }
 
 
@@ -306,39 +340,6 @@ function create3(){
     return {ok:"ok", molino}
 }
 
-
-function actualizarCubos(){
-    let qubes= updateQubsBy("rows")
-    return qubes
-}
-
-
-function updateQubsBy(what){
-    var q= 0
-    var qubes= []
-    for(let aa= 0; aa < 9; aa++){
-        for(let a= 0; a < 9; a++){
-            if(what==="rows") {
-                qubes.push(rows[aa][a])
-            }
-            if(what==="cols") {
-                qubes.push(cols[a][aa])
-            }
-            if(what==="boxs") {
-                var gross= Math.floor(q / 9) //indica el numero de fila
-                var index= Math.floor(gross / 3) //este da 0, 1 ó 2
-                var module= (q % 9)
-                let indexbox = (Math.floor(q/9)*3 + q%3) %9 //índice puntual -> 0 al 8
-                var foundbox= Math.floor(module / 3) + index * 3 //índice del box -> 0 al 8
-                qubes.push(boxs[foundbox][indexbox])
-                q++
-            }            
-        }
-    }
-    return qubes
-}
-
-
 function difficult(level) {
     var coef= level *0.4 +5
 
@@ -350,6 +351,34 @@ function difficult(level) {
     }
     return false //no se busca un carajo
 }
+
+function sudoqubs (level, entity){
+    var suerte
+    var array = []
+    for (let index = 0; index < 9; index++) { 
+        for (let ii = 0; ii < 9; ii++) {
+            suerte= difficult (level)
+            if (!suerte) {
+            entity[index][ii]= 0 
+            array.push(index)
+            }
+        }
+    }
+    return array.length
+}
+
+poss()
+// update()
+// possRandC()
+restore()
+let sudoku =create3()
+sudoqubs(5, rows)
+qubs= updateQubsBy("rows")
+updateEvery()
+
+
+
+// console.log(cols, rows, boxs, qubs)
 
 // module.exports={
 export {
@@ -367,14 +396,18 @@ export {
     possRows,
     possBoxs,
     poss,
+    possRandC,
     restore,
     detectdifficulty,
     megasolution,
     create3,
     actualizarCubos,
     updateQubsBy,
-    difficult
+    difficult,
     //Para crear sudoku lógico:
+    create3,
+    updateQubsBy, 
+    sudoku
     //Pendiente en proceso
 }
 

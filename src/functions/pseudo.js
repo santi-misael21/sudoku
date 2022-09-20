@@ -50,7 +50,7 @@ function map_filas_cajas(){
 }
         
 export {
-        legalmaping
+        map_filas_cajas
 }
             
 

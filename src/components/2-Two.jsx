@@ -1,34 +1,11 @@
 import React from "react";
-import { actualizarCubos, boxs, cols, create3, detectdifficulty, difficult, megasolution, poss, qubs, restore, rows } from "../functions/2-Estructures";
-// import { actualizarCubos, create, create3, create4 } from "../functions/3-Creator";
+import { useState } from "react";
+import { boxs, cols, create3, detectdifficulty, megasolution, poss, possRandC, qubs, restore, rows, sudoku, update } from "../functions/2-Estructures";
+
 import Three from "./3-Three";
 
-function sudoku(level, entity){
-    var suerte
-    var array= []
-    for (let index = 0; index < 9; index++) {
-        for (let ii = 0; ii < 9; ii++) {
-            suerte= difficult(level) 
-            if (!suerte) {
-                entity[index][ii]= 0
-                array.push(index)            
-            }
-        }
-    }
-    return array.length
-}
-
-console.log(cols, rows, boxs, qubs)
-poss()
-restore()
-// create()
-create3()
-let qubes= actualizarCubos()
-console.log(cols, rows, boxs, qubes)
+// console.log(cols, rows, boxs, qubs, 'sudoku', sudoku)
 // console.log(create())
-
-sudoku(3, rows)
-console.log(rows)
 
 // let diff= (detectdifficulty(qubs).length)
 // let realizabilidad= megasolution()
@@ -40,9 +17,11 @@ export default function Two() { //9 rows con 9 squares cada una
 
 // //     console.log(qubes, qubs, rows)
     
-//     console.log('cubos llenos: ', diff)
+    // console.log('cubos llenos: ', diff)
     
-//     console.log('veracidad: ', realizabilidad)
+    // console.log('veracidad: ', realizabilidad)
+
+    let [carga, setCarga] = useState(false)
 
     let numbers= new Array()
     let modules= new Array()
@@ -54,11 +33,19 @@ export default function Two() { //9 rows con 9 squares cada una
         modules.push(numbers.slice( mm * 9 , (mm + 1) * 9 ))
     }
 
+    function cargar(){
+        setCarga(true)
+    }
+
+    let a
     
     return (
         <div>
-            {/* <Three/> */}
-            {rows && rows.length > 0 && rows.map((r, i)=> <Three key={i} rows={rows} row={r} macroindex= {i} module={modules[i]}/>)}
+            {/* {rows && rows.length > 0 && rows.map((r, i)=> {a= modules[i]; console.log(a)} )} */}
+            {rows.map((r, i)=> <Three key={i} rows={rows} row={r} module={modules[i]} carga={carga && carga}/>)}
+            <button onClick={cargar}>
+                Cargar
+            </button>
         </div>
     )
 } 
