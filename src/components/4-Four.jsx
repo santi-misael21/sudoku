@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import '../styles/0-zero.css';
-import { qubs, update, cols, boxs, restore, poss, detectdifficulty, megasolution } from '../functions/2-Estructures.js';
+import { qubs, update, cols, boxs, restore, poss, detectdifficulty, megasolution, howmanyQubs, pointerMistakes } from '../functions/2-Estructures.js';
 import { solution } from '../functions/0-Unrepeatable.js';
 
 // const { qubs, update, cols, boxs, restore } = require('../functions/2-Estructures.js');
@@ -8,61 +8,50 @@ import { solution } from '../functions/0-Unrepeatable.js';
 // const { create } = require('../functions/3-Creator.js')
 
 
-
-export default function Four({unity, rows, loyalindex, carga}){
-    
-    // console.log(unity, loyalindex) //rows = [  [  0,0,0,  0,0,0,  0,0,0  ]  ,  [...]  ]
-
-    if(loyalindex===9){
-    }
+export default function Four({unity, rows, loyalindex, carga, sendFill, sendRepsRows, sendRepsCols, sendRepsBoxs}){
 
     let [filas, setFilas]= useState(rows)
-
-    // // create()
     
     function changeEach(e){
         console.log("unity, value", unity, loyalindex, e.target.value)
         var val= e.target.value
-        // // // // for (let a in unity) {
-        // // // //     prop= a
-        // // // //     // console.log(unity[a])
-        // // // // }
-        if(parseInt(val)!==parseInt(val) || val==='0') { // si no es un número, se desconsidera
-            // // // // console.log(unity[a], a)
-            return document.getElementsByTagName("input")[loyalindex].value=''
-            // // // // return document.getElementsByTagName("input")[0].value=''
+        if(val===''){
+            unity= 0
         }
-        if(e.target.value.length > 1) { // si la cadena es mayor a 1, se considera solo el [0]
-            return document.getElementsByTagName("input")[loyalindex].value= val[0]
+        if(val!==''){
+            unity= parseInt(val)
         }
-        // console.log(rows)
-        // for(let n= 0; n< 9; n++) {
-        //     console.log(solution(rows[n]))
-        //     if(solution(rows[n]) !== -1) {
-        //         console.log(-1)
-        //         repeat= true
-        //     }
-        // }
-        unity= parseInt(val)
         qubs[loyalindex]= unity
         setFilas(update(loyalindex))
-        console.log(filas, 'cols: ', cols, 'boxs: ', boxs)
-
-        //Etapa de repetidos
-        // function findReps(entidad) {
-        //     var finder
-        //     for (let b= 0; b< 9; b++) {
-        //         finder= solution(entidad[b])
-        //         if (finder !== -1) return finder
-        //     }
-        //     return finder
+        sendFill(howmanyQubs(rows))
+        // console.log("megasolution", megasolution()[rows])
+        let repsRows=pointerMistakes('rows', megasolution())
+        let repsCols=pointerMistakes('cols', megasolution())
+        let repsBoxs=pointerMistakes('boxs', megasolution())
+        // if(repsRows!== undefined){
+            sendRepsRows(repsRows)
         // }
-        // console.log( "cols: ",
-        //     findReps(cols), 'rows: ',
-        //     findReps(rows), 'boxs: ',
-        //     findReps(boxs),
-        // )
-        // return setEach(val)
+        // if(repsCols!== undefined){
+            sendRepsCols(repsCols)
+        // }
+        // if(repsBoxs!== undefined){
+            sendRepsBoxs(repsBoxs)
+        // }
+        // console.log(filas, 'cols: ', cols, 'boxs: ', boxs)
+
+        function politica1(){if(val===''){
+            return document.getElementsByTagName("input")[loyalindex].value=''
+        }}
+        politica1()
+        function politica2(){if(parseInt(val)!==parseInt(val) || val==='0' || val==='') { // si no es un número, se desconsidera
+            return document.getElementsByTagName("input")[loyalindex].value=''
+        }}
+        politica2()
+        function politica3(){if(e.target.value.length > 1) { // si la cadena es mayor a 1, se considera solo el [0]
+            politica2()
+            return document.getElementsByTagName("input")[loyalindex].value= val[0]
+        }}      
+        politica3()
     }
 
 

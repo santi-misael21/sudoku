@@ -4,7 +4,11 @@ function solution(a){
             if(a[b]===a[c] &&b!=c) {
                 if(a[b] !== 0 && a[b]!== undefined) {
                     var catt= [a[b], a[c]]//Object.assign(a[c], a[b])
-                    return catt
+                    // return catt
+                    return {
+                        reps: [b,c],
+                        vals: catt
+                    }
                 }
             }
         }

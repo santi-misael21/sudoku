@@ -117,7 +117,7 @@ function possRows(){//
 
     for(let alfa= 0; alfa <= 8; alfa++) {
         for(let beta= 0; beta <= 8; beta++) {
-            rows[alfa][beta]= qubs[ochouno] //escribiendo esa línea conecté una neurona al ver que beta iba antes que alfa
+            rows[alfa][beta]= qubs[ochouno] 
             ochouno++
         }
     }
@@ -189,6 +189,22 @@ function megasolution(){
     }
     let concat= {rows: r, boxs: b, cols: c}
     return concat
+}
+
+function pointerMistakes(entityString, concat){
+    // let concat= megasolution()
+    // function easy(entity){
+        let e= concat[entityString]
+        for(let a=0; a<e.length; a++){
+            if(e[a]!==-1){
+                return {
+                    indice: a,
+                    subindice: e[a]
+                }
+            }
+        }
+    // }
+    // return easy(entity)
 }
 
 function detectdifficulty(qubs){
@@ -367,6 +383,30 @@ function sudoqubs (level, entity){
     return array.length
 }
 
+function howmanyQubs(rows){
+    let cont= []
+    for(let a=0; a<rows.length; a++){
+        for(let b=0; b<rows[a].length;b++){
+            if(rows[a][b]!==0){
+                cont.push(rows[a][b])
+            }
+        }
+    }
+    return cont.length
+}
+
+function indexFromSquare(first, second, entityString){
+    function dependsWhom(dominante, calibrador){
+        return dominante*9 +calibrador
+    }
+    if(entityString==='rows'){
+        return dependsWhom(first,second)
+    }
+    if(entityString==='cols'){
+        return dependsWhom(second,first)
+    }
+}
+
 poss()
 // update()
 // possRandC()
@@ -401,13 +441,13 @@ export {
     detectdifficulty,
     megasolution,
     create3,
-    actualizarCubos,
     updateQubsBy,
     difficult,
     //Para crear sudoku lógico:
-    create3,
-    updateQubsBy, 
-    sudoku
-    //Pendiente en proceso
+    sudoku,
+    //Registro de sudoku:
+    howmanyQubs,
+    //Registro errores:
+    pointerMistakes
 }
 

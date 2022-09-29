@@ -48,6 +48,15 @@ function map_filas_cajas(){
         }
         return true
 }
+
+/*
+Tendría que, cada vez que se cambia un número, cualquiera sea el cambio,
+revisar si existen repeticiones en todos los frentes o entidades (cols, rows y boxs).
+Revisar primero que la function encargada sea una function de parametes-and-return y no una function de fallen-and-update.
+solution() está ok.
+Revisar su cohesión
+Ahora, poner la función y ver qué retorna.
+*/
         
 export {
         map_filas_cajas
