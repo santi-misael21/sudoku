@@ -178,33 +178,37 @@ function updateEvery(){
     }
 }
 
-function megasolution(){
+function megasolution(quantity){
     let b= []
     let c=[]
     let r=[]
     for (let a= 0; a < 9; a++) {
-        r.push(solution(rows[a])) 
-        c.push(solution(cols[a])) 
-        b.push(solution(boxs[a])) 
+        r.push(solution(rows[a], quantity)) 
+        c.push(solution(cols[a], quantity)) 
+        b.push(solution(boxs[a], quantity)) 
     }
     let concat= {rows: r, boxs: b, cols: c}
     return concat
 }
 
-function pointerMistakes(entityString, concat){
-    // let concat= megasolution()
-    // function easy(entity){
-        let e= concat[entityString]
-        for(let a=0; a<e.length; a++){
-            if(e[a]!==-1){
-                return {
-                    indice: a,
-                    subindice: e[a]
-                }
-            }
+function pointerMistakes(entityString, concat, quantity){
+    
+    let response= []
+    let e= concat[entityString]
+    for(let a=0; a<e.length; a++){
+        if(e[a]!==-1){
+            response.push({
+                indice: a,
+                subindice: e[a]
+            })
         }
-    // }
-    // return easy(entity)
+    }
+    if(quantity> 1){
+        return response
+    }
+    if(!quantity || quantity===1){
+        return [response[0]]
+    }
 }
 
 function detectdifficulty(qubs){
@@ -395,16 +399,37 @@ function howmanyQubs(rows){
     return cont.length
 }
 
-function indexFromSquare(first, second, entityString){
+function rows_cols_to_squares(first, second, rowsORcols){
     function dependsWhom(dominante, calibrador){
         return dominante*9 +calibrador
     }
-    if(entityString==='rows'){
+    if(rowsORcols==='rows'){
         return dependsWhom(first,second)
     }
-    if(entityString==='cols'){
+    if(rowsORcols==='cols'){
         return dependsWhom(second,first)
     }
+}
+
+function boxs_to_squares(box, index){
+    return Math.floor(index/3)*9 + index % 3 + (box % 3) * 3 + Math.floor(box/3) *3*9
+}
+
+function getBoxFromQ(q) {
+        
+    var gross= Math.floor(q / 9) //indica el numero de fila
+//calculamos el index vertical
+    var index= Math.floor(gross / 3) //este da 0, 1 ó 2
+//lo usamos para calcular el box exacto al cual pertenecerá
+    var module= (q % 9) 
+
+    var foundbox= Math.floor(module / 3) + index * 3 //índice del box -> 0 al 8
+    let indexbox = (Math.floor(q/9)*3 + q%3) %9 //índice puntual -> 0 al 8
+    
+    // boxs[foundbox][indexbox] = qubs[q]
+
+    return [foundbox,indexbox]
+
 }
 
 poss()
@@ -417,10 +442,6 @@ qubs= updateQubsBy("rows")
 updateEvery()
 
 
-
-// console.log(cols, rows, boxs, qubs)
-
-// module.exports={
 export {
     //Para testing
     rows, cols, boxs, qubs,
@@ -448,6 +469,11 @@ export {
     //Registro de sudoku:
     howmanyQubs,
     //Registro errores:
-    pointerMistakes
+    pointerMistakes,
+    //Conversores inversos:
+    boxs_to_squares,
+    rows_cols_to_squares,
+    //conversor regular
+    getBoxFromQ
 }
 
