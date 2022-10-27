@@ -369,7 +369,7 @@ function difficult(level) {
     if(float > coef) {
         return true //se busca un numero
     }
-    return false //no se busca un carajo
+    return false //no se busca nada
 }
 
 function sudoqubs (level, entity){
